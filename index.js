@@ -41,6 +41,12 @@ async function run() {
           res.send(craftItem)
     })
 
+    app.get('/mycrafts/:userId',async(req,res)=>{
+        const {userId} = req.params
+        const myCrafts = await craftsCollection.find({userId}).toArray()
+        res.send(myCrafts)
+    })
+
     app.post('/crafts',async(req,res)=>{
           const craftData = req.body
           const addItem = await craftsCollection.insertOne(craftData)
