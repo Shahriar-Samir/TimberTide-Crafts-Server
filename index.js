@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@databases1.utppk3d.mongodb.net/?retryWrites=true&w=majority&appName=databases1`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -32,6 +32,13 @@ async function run() {
     app.get('/allcrafts',async(req,res)=>{
           const allItems = await craftsCollection.find().toArray()
           res.send(allItems)
+    })
+
+    app.get('/craftitem/:id',async(req,res)=>{
+          const {id} = req.params
+          const objId = new ObjectId(id)
+          const craftItem = await craftsCollection.findOne(objId)
+          res.send(craftItem)
     })
 
     app.post('/crafts',async(req,res)=>{
