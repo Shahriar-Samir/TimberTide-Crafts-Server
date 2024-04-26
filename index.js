@@ -41,10 +41,23 @@ async function run() {
           res.send(craftItem)
     })
 
-    app.get('/mycrafts/:userId',async(req,res)=>{
-        const {userId} = req.params
-        const myCrafts = await craftsCollection.find({userId}).toArray()
-        res.send(myCrafts)
+    app.get('/mycrafts/:userId/:customized',async(req,res)=>{
+        const {userId,customized} = req.params
+
+        if(customized==='customized-yes'){
+          const myCrafts = await craftsCollection.aggregate([{$match: {userId, customization:'Yes'}}]).toArray()
+          res.send(myCrafts)
+        }
+        if(customized === 'customized-no'){
+          const myCrafts = await craftsCollection.aggregate([{$match: {userId, customization:'No'}}]).toArray()
+          res.send(myCrafts)
+        }
+        if(customized === 'all'){
+          const myCrafts = await craftsCollection.aggregate([{$match: {userId}}]).toArray()
+          res.send(myCrafts)
+        }
+       
+       
     })
 
     app.post('/crafts',async(req,res)=>{
