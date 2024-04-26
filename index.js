@@ -29,6 +29,11 @@ async function run() {
 
     const craftsCollection = client.db('Art_and_craft_store').collection('arts&crafts')
     
+    app.get('/allcrafts',async(req,res)=>{
+          const allItems = await craftsCollection.find().toArray()
+          res.send(allItems)
+    })
+
     app.post('/crafts',async(req,res)=>{
           const craftData = req.body
           const addItem = await craftsCollection.insertOne(craftData)
