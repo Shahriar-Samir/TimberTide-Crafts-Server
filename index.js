@@ -66,6 +66,27 @@ async function run() {
           res.send(addItem)
     })
 
+    app.put('/crafts',async(req,res)=>{
+          const {formData,id} = req.body
+          const objId = new ObjectId(id)
+          const options = {uprest:true}
+          const craftItem = {
+             $set:{
+             image: formData.image,
+             itemName: formData.itemName,
+             subcategoryName: formData.subcategoryName,
+             shortDescription: formData.shortDescription,
+             price: formData.price,
+             rating: formData.rating,
+             customization: formData.customization,
+             processingTime: formData.processingTime,
+             stockStatus: formData.stockStatus,
+             }
+          }
+          const addItem = await craftsCollection.updateOne({_id:objId},craftItem,options)
+          res.send(addItem)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
