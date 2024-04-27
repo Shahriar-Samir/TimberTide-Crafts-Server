@@ -25,14 +25,12 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-   
+    await client.connect();
 
     const craftsCollection = client.db('Art_and_craft_store').collection('arts&crafts')
     const subcategoriesCollection = client.db('Art_and_craft_store').collection('subcategories')
 
-    app.get('/',(req,res)=>{
-       res.send("TimberTide Crafts page's server running")
-    })
+  
 
     app.get('/subcategories',async(req,res)=>{
       const allCategoires = await subcategoriesCollection.find().toArray()
@@ -124,6 +122,9 @@ async function run() {
 }
 run().catch(console.dir);
 
+app.get('/',(req,res)=>{
+  res.send("TimberTide Crafts page's server running")
+})
 
 
 
