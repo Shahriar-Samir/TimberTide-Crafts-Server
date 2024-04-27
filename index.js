@@ -28,7 +28,13 @@ async function run() {
     await client.connect();
 
     const craftsCollection = client.db('Art_and_craft_store').collection('arts&crafts')
-    
+    const subcategoriesCollection = client.db('Art_and_craft_store').collection('subcategories')
+
+    app.get('/subcategories',async(req,res)=>{
+      const allCategoires = await subcategoriesCollection.find().toArray()
+      res.send(allCategoires)
+    })
+
     app.get('/craftitems',async(req,res)=>{
           const allItems = await craftsCollection.find().limit(6).toArray()
           res.send(allItems)
