@@ -29,10 +29,15 @@ async function run() {
 
     const craftsCollection = client.db('Art_and_craft_store').collection('arts&crafts')
     
-    app.get('/allcrafts',async(req,res)=>{
-          const allItems = await craftsCollection.find().toArray()
+    app.get('/craftitems',async(req,res)=>{
+          const allItems = await craftsCollection.find().limit(6).toArray()
           res.send(allItems)
     })
+
+    app.get('/allcrafts',async(req,res)=>{
+      const allItems = await craftsCollection.find().toArray()
+      res.send(allItems)
+  })
 
     app.get('/craftitem/:id',async(req,res)=>{
           const {id} = req.params
