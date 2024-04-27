@@ -7,7 +7,11 @@ const app = express()
 
 // middlewares 
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+  origin: ["http://localhost:5173", "https://emailpassword-60174.firebaseapp.com"],
+  })
+)
 
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
