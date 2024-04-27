@@ -30,6 +30,10 @@ async function run() {
     const craftsCollection = client.db('Art_and_craft_store').collection('arts&crafts')
     const subcategoriesCollection = client.db('Art_and_craft_store').collection('subcategories')
 
+    app.get('/',(req,res)=>{
+       res.send("TimberTide Crafts page's server running")
+    })
+
     app.get('/subcategories',async(req,res)=>{
       const allCategoires = await subcategoriesCollection.find().toArray()
       res.send(allCategoires)
