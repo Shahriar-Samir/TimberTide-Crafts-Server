@@ -71,6 +71,12 @@ async function run() {
        
     })
 
+    app.get('/artsAndCrafts/:subcategory',async(req,res)=>{
+        const {subcategory} = req.params
+        const getSubcategoryItems = await craftsCollection.aggregate([{$match: {subcategoryName:subcategory}}]).toArray()
+        res.send(getSubcategoryItems)
+    })
+
     app.post('/crafts',async(req,res)=>{
           const craftData = req.body
           const addItem = await craftsCollection.insertOne(craftData)
